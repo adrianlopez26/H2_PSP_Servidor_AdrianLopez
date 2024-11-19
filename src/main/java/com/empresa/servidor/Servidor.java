@@ -55,6 +55,18 @@ public class Servidor {
                                     int anioBusqueda = Integer.parseInt(entrada.readLine());
                                     respuesta = accesoDatos.buscarLibrosPorAnio(anioBusqueda);
                                     break;
+                                case "BUSCAR_POR_ID":
+                                    int idBusqueda = Integer.parseInt(entrada.readLine());
+                                    respuesta = accesoDatos.buscarLibrosPorId(idBusqueda);
+                                    break;
+                                case "BUSCAR_POR_TITULO":
+                                    String tituloBusqueda = entrada.readLine();
+                                    respuesta = accesoDatos.buscarLibrosPorTitulo(tituloBusqueda);
+                                    break;
+                                case "BUSCAR_POR_AUTOR":
+                                    String autorBusqueda = entrada.readLine();
+                                    respuesta = accesoDatos.buscarLibrosPorAutor(autorBusqueda);
+                                    break;
                                 default:
                                     respuesta = "Operación no válida.";
                             }

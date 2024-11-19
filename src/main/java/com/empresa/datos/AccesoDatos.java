@@ -99,4 +99,76 @@ public class AccesoDatos {
         }
         return resultado.toString().isEmpty() ? "No hay libros disponibles para el año " + anio + "." : resultado.toString();
     }
+
+    public String buscarLibrosPorId(int id) {
+        StringBuilder resultado = new StringBuilder();
+        String query = "SELECT * FROM libros WHERE id = ?";
+
+        try (Connection conexion = ConexionBD.getConexion();
+             PreparedStatement statement = conexion.prepareStatement(query)) {
+
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                resultado.append("ID: ").append(rs.getInt("id"))
+                        .append(", Título: ").append(rs.getString("titulo"))
+                        .append(", Autor: ").append(rs.getString("autor"))
+                        .append(", Año: ").append(rs.getInt("anio"))
+                        .append("\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error al buscar libro por ID.";
+        }
+        return resultado.toString().isEmpty() ? "No hay libro disponible con el ID " + id + "." : resultado.toString();
+    }
+
+    public String buscarLibrosPorTitulo(String titulo) {
+        StringBuilder resultado = new StringBuilder();
+        String query = "SELECT * FROM libros WHERE titulo LIKE ?";
+
+        try (Connection conexion = ConexionBD.getConexion();
+             PreparedStatement statement = conexion.prepareStatement(query)) {
+
+            statement.setString(1, "%" + titulo + "%");
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                resultado.append("ID: ").append(rs.getInt("id"))
+                        .append(", Título: ").append(rs.getString("titulo"))
+                        .append(", Autor: ").append(rs.getString("autor"))
+                        .append(", Año: ").append(rs.getInt("anio"))
+                        .append("\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error al buscar libros por título.";
+        }
+        return resultado.toString().isEmpty() ? "No hay libros disponibles con el título " + titulo + "." : resultado.toString();
+    }
+
+    public String buscarLibrosPorAutor(String autor) {
+        StringBuilder resultado = new StringBuilder();
+        String query = "SELECT * FROM libros WHERE autor LIKE ?";
+
+        try (Connection conexion = ConexionBD.getConexion();
+             PreparedStatement statement = conexion.prepareStatement(query)) {
+
+            statement.setString(1, "%" + autor + "%");
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                resultado.append("ID: ").append(rs.getInt("id"))
+                        .append(", Título: ").append(rs.getString("titulo"))
+                        .append(", Autor: ").append(rs.getString("autor"))
+                        .append(", Año: ").append(rs.getInt("anio"))
+                        .append("\n");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "Error al buscar libros por autor.";
+        }
+        return resultado.toString().isEmpty() ? "No hay libros disponibles con el autor " + autor + "." : resultado.toString();
+    }
 }
